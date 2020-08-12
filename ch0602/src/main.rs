@@ -52,4 +52,21 @@ fn main() {
         7 => println!("seven"),
         _ => (), //placeholder => unit value
     }
+
+    let coin = Coin::Dime;
+    let mut count = 0;
+    match coin {
+        Coin::Quarter(state) => {
+            println!("State quarter from {:?}!", state)
+        },
+        _ => count += 1,
+    }
+
+    let money = Coin::Quarter(UsState::Alaska);
+    let mut num = 0;
+    if let Coin::Quarter(state) = money {
+        println!("State quarter from {:?}!", state)
+    } else {
+        num += 1;
+    }
 }
