@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 struct Point1<T, U> {
     x: T,
     y: U,
@@ -40,15 +42,36 @@ fn largest(list: &[i32]) -> i32 {
     largest
 }
 
-// fn largest1<T>(list: &[T]) -> T {
-//     let mut largest = list[0];
-//     for &item in list {
-//         if item > largest {
-//             largest = item;
-//         }
-//     }
-//     largest
-// }
+fn largest1<T: PartialOrd + Copy>(list: &[T]) -> T {
+    let mut largest = list[0];
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self { x, y }
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
 
 fn main() {
     let p1 = Point1 { x:5 , y: 10.4 };
@@ -61,9 +84,13 @@ fn main() {
 
     let number_list = vec![34, 50, 25, 100, 65];
     let result = largest(&number_list);
-    println!("The largest number is {}", result);
+    let result1 = largest1(&number_list);
+    println!("The result is {}", result);
+    println!("The result1 is {}", result1);
 
     let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
     let result = largest(&number_list);
-    println!("The largest number is {}", result);
+    let result1 = largest1(&number_list);
+    println!("The result is {}", result);
+    println!("The result1 is {}", result1);
 }
